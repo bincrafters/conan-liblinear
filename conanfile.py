@@ -40,9 +40,9 @@ class LibLinearConan(ConanFile):
 
     def build(self):
         if self.settings.os != 'Windows':
-            self.system("nmake @Makefile.win")
-        else:
             self.system("make")
+        else:
+            self.system("nmake @Makefile.win")
             
     def package(self):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
