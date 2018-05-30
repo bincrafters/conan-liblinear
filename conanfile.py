@@ -22,7 +22,7 @@ class LibLinearConan(ConanFile):
     # Options may need to change depending on the packaged library.
     settings = {"os": ["Linux", "Windows"], 
                 "arch": ["x86", "x86_64"], 
-                "compiler": {"gcc": {"version": ["4.9", "5", "6", "7"]}, "Visual Studio": {"version": ["12", "14", "15"]}}, 
+                "compiler": {"gcc": {"version": ["4.9", "5", "6", "7"]}, "Visual Studio": {"version": ["14", "15"]}}, 
                 "build_type": ["Debug", "Release"]}
 
     # Custom attributes for Bincrafters recipe conventions
@@ -43,14 +43,14 @@ class LibLinearConan(ConanFile):
             raise Exception("Error while executing:\n\t %s" % command)
 
     def build(self):
-        if self.settings.os != 'Windows':
+        if self.settings.os == "Linux":
             cflags = ["-Wall", "-Wconversion", "-fPIC"]
             if self.settings.build_type == "Debug":
                 cflags.append("-g")
             else:
                 cflags.append("-O3")
             self.system("cd {0} && make CFLAGS='{1}' lib".format(self.source_subfolder, " ".join(cflags)))
-        else:
+        elif self.settings.compiler == "Visual Studio":
             cflags = ["/nologo", "/EHsc", "/I.", "/D _CRT_SECURE_NO_DEPRECATE"]
             cflags.append("/{0}".format(self.settings.compiler.runtime))
             if self.settings.build_type == "Debug":
@@ -58,6 +58,8 @@ class LibLinearConan(ConanFile):
             else:
                 cflags.append("/O2")
             self.system('cd {0} && nmake /F Makefile.win CFLAGS="{1}" lib'.format(self.source_subfolder, " ".join(cflags)))
+        else:
+            raise Exception("OS or compiler not supported")
             
     def package(self):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
