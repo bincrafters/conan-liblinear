@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from conans import ConanFile, CMake, tools
+from conans import ConanFile, tools
 import os
 
 
@@ -24,7 +24,7 @@ class LibLinearConan(ConanFile):
 
     # Custom attributes for Bincrafters recipe conventions
     source_subfolder = "source_subfolder"
-    build_subfolder = "build_subfolder"
+    build_subfolder = "source_subfolder"
 
     def source(self):
         source_url = "https://github.com/cjlin1/liblinear"
