@@ -22,18 +22,12 @@ class LibLinearConan(ConanFile):
     # Options may need to change depending on the packaged library.
     settings = {"os": ["Linux", "Windows"], 
                 "arch": ["x86", "x86_64"], 
-                "compiler": ["gcc", "Visual Studio"], 
+                "compiler": {"gcc": {"version": ["4.9", "5", "6", "7"]}, "Visual Studio": {"version": ["12", "14", "15"]}}, 
                 "build_type": ["Debug", "Release"]}
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
 
     # Custom attributes for Bincrafters recipe conventions
     source_subfolder = "source_subfolder"
     build_subfolder = "source_subfolder"
-
-    def configure(self):
-        if self.settings.os == 'Windows' and not self.options.shared:
-            raise Exception("Building a static library is not supported on Windows")
 
     def source(self):
         source_url = "https://github.com/cjlin1/liblinear"
@@ -50,18 +44,25 @@ class LibLinearConan(ConanFile):
 
     def build(self):
         if self.settings.os != 'Windows':
-            self.system("cd {0} && make {1}".format(self.source_subfolder, "lib" if self.options.shared else ""))
+            cflags = ["-Wall", "-Wconversion", "-fPIC"]
+            if self.settings.build_type == "Debug":
+                cflags.append("-g")
+            else:
+                cflags.append("-O3")
+            self.system("cd {0} && make CFLAGS='{1}' lib".format(self.source_subfolder, " ".join(cflags)))
         else:
-            self.system("cd {0} && nmake @Makefile.win lib".format(self.source_subfolder))
+            cflags = ["/nologo", "/EHsc", "/I.", "/D _CRT_SECURE_NO_DEPRECATE"]
+            if self.settings.build_type == "Debug":
+                cflags.append("/DEBUG")
+            else:
+                cflags.append("/O2")
+            self.system("cd {0} && nmake CFLAGS='{1}' @Makefile.win lib".format(self.source_subfolder, " ".join(cflags)))
             
     def package(self):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
         self.copy(pattern="*.h", dst="include", src=self.source_subfolder)
-        if self.options.shared:
-            self.copy(pattern="*.dll", dst="bin", keep_path=False)
-            self.copy(pattern="*.so*", dst="lib", keep_path=False)
-        else:
-            self.copy(pattern="*.a", dst="lib", keep_path=False)
+        self.copy(pattern="*.dll", dst="bin", keep_path=False)
+        self.copy(pattern="*.so*", dst="lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
