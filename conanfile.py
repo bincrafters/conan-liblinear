@@ -7,7 +7,7 @@ import os
 
 class LibLinearConan(ConanFile):
     name = "liblinear"
-    version = "v220"
+    version = "220"
     description = "A Library for Large Linear Classification"
     url = "https://github.com/konijnendijk/conan-libname"
     homepage = "https://www.csie.ntu.edu.tw/~cjlin/liblinear/"
