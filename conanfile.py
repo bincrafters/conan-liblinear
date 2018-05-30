@@ -52,11 +52,12 @@ class LibLinearConan(ConanFile):
             self.system("cd {0} && make CFLAGS='{1}' lib".format(self.source_subfolder, " ".join(cflags)))
         else:
             cflags = ["/nologo", "/EHsc", "/I.", "/D _CRT_SECURE_NO_DEPRECATE"]
+            cflags.append("/{0}".format(self.settings.compiler.runtime))
             if self.settings.build_type == "Debug":
                 cflags.append("/DEBUG")
             else:
                 cflags.append("/O2")
-            self.system('cd {0} && env -u MAKE -u MAKEFLAGS nmake /F Makefile.win CFLAGS="{1}" lib'.format(self.source_subfolder, " ".join(cflags)))
+            self.system('cd {0} && nmake /F Makefile.win CFLAGS="{1}" lib'.format(self.source_subfolder, " ".join(cflags)))
             
     def package(self):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
