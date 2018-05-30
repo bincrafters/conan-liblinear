@@ -41,14 +41,13 @@ class LibLinearConan(ConanFile):
 
     def build(self):
         if self.settings.os != 'Windows':
-            self.system("make")
+            self.system("cd {0} && make".format(self.source_subfolder))
         else:
-            self.system("nmake @Makefile.win")
+            self.system("cd {0} && nmake @Makefile.win".format(self.source_subfolder))
             
     def package(self):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
-        include_folder = os.path.join(self.source_subfolder, "include")
-        self.copy(pattern="*", dst="include", src=include_folder)
+        self.copy(pattern="*.h", dst="include", src=self.source_subfolder)
         self.copy(pattern="*.dll", dst="bin", keep_path=False)
         self.copy(pattern="*.lib", dst="lib", keep_path=False)
         self.copy(pattern="*.a", dst="lib", keep_path=False)
