@@ -29,7 +29,7 @@ class LibLinearConan(ConanFile):
     def source(self):
         source_url = "https://github.com/cjlin1/liblinear"
         tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.github_version))
-        extracted_dir = self.name + "-" + self.version
+        extracted_dir = self.name + "-" + self.github_version
 
         #Rename to "source_subfolder" is a convention to simplify later steps
         os.rename(extracted_dir, self.source_subfolder)
