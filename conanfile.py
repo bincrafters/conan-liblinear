@@ -56,7 +56,7 @@ class LibLinearConan(ConanFile):
                 cflags.append("/DEBUG")
             else:
                 cflags.append("/O2")
-            self.system("cd {0} && nmake CFLAGS='{1}' @Makefile.win lib".format(self.source_subfolder, " ".join(cflags)))
+            self.system("cd {0} && env -u MAKE -u MAKEFLAGS nmake CFLAGS='{1}' @Makefile.win lib".format(self.source_subfolder, " ".join(cflags)))
             
     def package(self):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
