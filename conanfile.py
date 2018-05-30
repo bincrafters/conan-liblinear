@@ -7,7 +7,8 @@ import os
 
 class LibLinearConan(ConanFile):
     name = "liblinear"
-    version = "220"
+    version = "2.20"
+    github_version = "220"
     description = "A Library for Large Linear Classification"
     url = "https://github.com/konijnendijk/conan-libname"
     homepage = "https://www.csie.ntu.edu.tw/~cjlin/liblinear/"
@@ -27,7 +28,7 @@ class LibLinearConan(ConanFile):
 
     def source(self):
         source_url = "https://github.com/cjlin1/liblinear"
-        tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.version))
+        tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.github_version))
         extracted_dir = self.name + "-" + self.version
 
         #Rename to "source_subfolder" is a convention to simplify later steps
