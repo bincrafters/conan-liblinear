@@ -22,7 +22,7 @@ class LibLinearConan(ConanFile):
     # Options may need to change depending on the packaged library.
     settings = {"os": ["Linux", "Windows"], 
                 "arch": ["x86", "x86_64"], 
-                "compiler": {"gcc": {"version": ["4.9", "5", "6", "7"]}, "Visual Studio": {"version": ["14", "15"]}}, 
+                "compiler": {"gcc": {"version": ["4.9", "5", "6", "7"]}, "Visual Studio": {"version": ["14", "15"], "runtime": ["MT", "MTd", "MDd", "MD"]}}, 
                 "build_type": ["Debug", "Release"]}
 
     # Custom attributes for Bincrafters recipe conventions
