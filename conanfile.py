@@ -20,10 +20,7 @@ class LibLinearConan(ConanFile):
     exports = ["LICENSE.md"]
 
     # Options may need to change depending on the packaged library.
-    settings = {"os": ["Linux", "Windows"], 
-                "arch": ["x86", "x86_64"], 
-                "compiler": {"gcc": {"version": ["4.9", "5", "6", "7"]}, "Visual Studio": {"version": ["14", "15"], "runtime": ["MT", "MTd", "MDd", "MD"]}}, 
-                "build_type": ["Debug", "Release"]}
+    settings = "os", "arch", "compiler", "build_type"
 
     options = {"fPIC": [True, False]}
     default_options = "fPIC=True",
@@ -49,6 +46,16 @@ class LibLinearConan(ConanFile):
             raise Exception("Error while executing:\n\t %s" % command)
 
     def linux_build(self):
+
+        if self.settings.compiler == "gcc":
+            cc = "gcc"
+            cxx = "g++"
+        elif self.settings.compiler == "clang":
+            cc = "clang"
+            cxx = "clang++"
+        else:
+            raise Exception("Compiler not supported")
+
         cflags = ["-Wall", "-Wconversion"]
             
         if self.settings.build_type == "Debug":
@@ -59,7 +66,7 @@ class LibLinearConan(ConanFile):
         if self.options.fPIC:
             cflags.append("-fPIC")
 
-        self.system("cd {0} && make CFLAGS='{1}' lib".format(self.source_subfolder, " ".join(cflags)))
+        self.system("cd {0} && make CFLAGS='{1}' CC={2} CXX={3} lib".format(self.source_subfolder, " ".join(cflags), cc, cxx))
 
     def windows_build(self):
         cflags = ["/nologo", "/EHsc", "/I.", "/D _CRT_SECURE_NO_DEPRECATE"]
