@@ -87,9 +87,10 @@ class LibLinearConan(ConanFile):
             
     def package(self):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
-        self.copy(pattern="*.h", dst="include", src=self.source_subfolder)
-        self.copy(pattern="*.dll", dst="bin", keep_path=False)
-        self.copy(pattern="*.so*", dst="lib", keep_path=False)
+        self.copy(pattern="linear.h", dst="include", src=self.source_subfolder)
+        self.copy(pattern="tron.h", dst="include", src=self.source_subfolder)
+        self.copy(pattern="liblinear.so*", dst="bin", keep_path=False, src=self.source_subfolder)
+        self.copy(pattern="liblinear.dll", dst="lib", keep_path=False, src=self.source_subfolder)
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
