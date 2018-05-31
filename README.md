@@ -2,7 +2,7 @@
 
 | Bintray | Windows | Linux |
 |:--------:|:---------:|:-----------------:|
-| [ ![Bintray](https://api.bintray.com/packages/konijnendijk/public-conan/liblinear:Konijnendijk/images/download.svg) ](https://bintray.com/konijnendijk/public-conan/liblinear:Konijnendijk/2.20:stable) | ![[Appveyor branch](https://ci.appveyor.com/api/projects/status/bi1tqvs9bi3f8yc8/branch/stable/2.20?svg=true)](https://ci.appveyor.com/project/Konijnendijk/conan-liblinear) | [![Travis branch](https://travis-ci.org/Konijnendijk/conan-liblinear.svg?branch=stable/2.20)](https://travis-ci.org/Konijnendijk/conan-liblinear) |
+| [ ![Bintray](https://api.bintray.com/packages/konijnendijk/public-conan/liblinear:Konijnendijk/images/download.svg) ](https://bintray.com/konijnendijk/public-conan/liblinear:Konijnendijk/2.20:stable) | ![[Appveyor branch](https://ci.appveyor.com/api/projects/status/github/Konijnendijk/conan-liblinear/branch/stable/2.20?svg=true)](https://ci.appveyor.com/project/Konijnendijk/conan-liblinear) | [![Travis branch](https://travis-ci.org/Konijnendijk/conan-liblinear.svg?branch=stable/2.20)](https://travis-ci.org/Konijnendijk/conan-liblinear) |
 
 ## Conan.io Information
 
