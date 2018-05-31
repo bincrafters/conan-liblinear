@@ -25,9 +25,15 @@ class LibLinearConan(ConanFile):
                 "compiler": {"gcc": {"version": ["4.9", "5", "6", "7"]}, "Visual Studio": {"version": ["14", "15"], "runtime": ["MT", "MTd", "MDd", "MD"]}}, 
                 "build_type": ["Debug", "Release"]}
 
+    options = {"fPIC": [True, False]}
+    default_options = "fPIC=True",
+
     # Custom attributes for Bincrafters recipe conventions
     source_subfolder = "source_subfolder"
-    build_subfolder = "source_subfolder"
+
+    def config_options(self):
+        if self.settings.os == 'Windows':
+            del self.options.fPIC
 
     def source(self):
         source_url = "https://github.com/cjlin1/liblinear"
@@ -42,22 +48,33 @@ class LibLinearConan(ConanFile):
         if retcode != 0:
             raise Exception("Error while executing:\n\t %s" % command)
 
+    def linux_build(self):
+        cflags = ["-Wall", "-Wconversion"]
+            
+        if self.settings.build_type == "Debug":
+            cflags.append("-g")
+        else:
+            cflags.append("-O3")
+        
+        if self.options.fPIC:
+            cflags.append("-fPIC")
+
+        self.system("cd {0} && make CFLAGS='{1}' lib".format(self.source_subfolder, " ".join(cflags)))
+
+    def windows_build(self):
+        cflags = ["/nologo", "/EHsc", "/I.", "/D _CRT_SECURE_NO_DEPRECATE"]
+        cflags.append("/{0}".format(self.settings.compiler.runtime))
+        if self.settings.build_type == "Debug":
+            cflags.append("/DEBUG")
+        else:
+            cflags.append("/O2")
+        self.system('cd {0} && nmake /F Makefile.win CFLAGS="{1}" lib'.format(self.source_subfolder, " ".join(cflags)))
+
     def build(self):
         if self.settings.os == "Linux":
-            cflags = ["-Wall", "-Wconversion", "-fPIC"]
-            if self.settings.build_type == "Debug":
-                cflags.append("-g")
-            else:
-                cflags.append("-O3")
-            self.system("cd {0} && make CFLAGS='{1}' lib".format(self.source_subfolder, " ".join(cflags)))
+            self.linux_build()
         elif self.settings.compiler == "Visual Studio":
-            cflags = ["/nologo", "/EHsc", "/I.", "/D _CRT_SECURE_NO_DEPRECATE"]
-            cflags.append("/{0}".format(self.settings.compiler.runtime))
-            if self.settings.build_type == "Debug":
-                cflags.append("/DEBUG")
-            else:
-                cflags.append("/O2")
-            self.system('cd {0} && nmake /F Makefile.win CFLAGS="{1}" lib'.format(self.source_subfolder, " ".join(cflags)))
+            self.windows_build()
         else:
             raise Exception("OS or compiler not supported")
             
