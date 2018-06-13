@@ -46,7 +46,6 @@ class LibLinearConan(ConanFile):
             raise Exception("Error while executing:\n\t %s" % command)
 
     def linux_build(self):
-
         if self.settings.compiler == "gcc":
             cc = "gcc"
             cxx = "g++"
@@ -67,6 +66,8 @@ class LibLinearConan(ConanFile):
             cflags.append("-fPIC")
 
         self.system("cd {0} && make CFLAGS='{1}' CC={2} CXX={3} lib".format(self.source_subfolder, " ".join(cflags), cc, cxx))
+
+        os.symlink("{0}/{1}/liblinear.so.3".format(self.build_folder, self.source_subfolder), "{0}/liblinear.so".format(self.source_subfolder))
 
     def windows_build(self):
         cflags = ["/nologo", "/EHsc", "/I.", "/D _CRT_SECURE_NO_DEPRECATE"]
@@ -89,7 +90,7 @@ class LibLinearConan(ConanFile):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
         self.copy(pattern="linear.h", dst="include", src=self.source_subfolder)
         self.copy(pattern="tron.h", dst="include", src=self.source_subfolder)
-        self.copy(pattern="liblinear.so*", dst="lib", keep_path=False, src=self.source_subfolder)
+        self.copy(pattern="liblinear.so*", dst="lib", keep_path=False, symlinks=True, src=self.source_subfolder)
         self.copy(pattern="liblinear.dll", dst="bin", keep_path=False, src=self.source_subfolder)
 
     def package_info(self):
