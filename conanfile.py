@@ -55,6 +55,11 @@ class LibLinearConan(ConanFile):
         else:
             raise Exception("Compiler not supported")
 
+        if self.settings.arch == "x86":
+            # liblinear makefile does not use cflags while linking, so do this here
+            cc += " -m32"
+            cxx += " -m32"
+
         cflags = ["-Wall", "-Wconversion"]
             
         if self.settings.build_type == "Debug":
@@ -63,10 +68,7 @@ class LibLinearConan(ConanFile):
             cflags.append("-O3")
         
         if self.options.fPIC:
-            cflags.append("-fPIC")
-
-        if self.settings.arch == "x86":
-            cflags.append("-m32")
+            cflags.append("-fPIC")   
 
         self.system("cd {0} && make CFLAGS='{1}' CC={2} CXX={3} lib".format(self.source_subfolder, " ".join(cflags), cc, cxx))
 
