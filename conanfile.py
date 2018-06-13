@@ -65,6 +65,9 @@ class LibLinearConan(ConanFile):
         if self.options.fPIC:
             cflags.append("-fPIC")
 
+        if self.settings.arch == "x86":
+            cflags.append("-m32")
+
         self.system("cd {0} && make CFLAGS='{1}' CC={2} CXX={3} lib".format(self.source_subfolder, " ".join(cflags), cc, cxx))
 
         os.symlink("{0}/{1}/liblinear.so.3".format(self.build_folder, self.source_subfolder), "{0}/liblinear.so".format(self.source_subfolder))
