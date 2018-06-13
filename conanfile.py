@@ -72,7 +72,7 @@ class LibLinearConan(ConanFile):
 
         self.system("cd {0} && make CFLAGS='{1}' CC={2} CXX={3} lib".format(self.source_subfolder, " ".join(cflags), cc, cxx))
 
-        os.symlink("{0}/{1}/liblinear.so.3".format(self.build_folder, self.source_subfolder), "{0}/liblinear.so".format(self.source_subfolder))
+        os.symlink("liblinear.so.3", "{0}/liblinear.so".format(self.source_subfolder))
 
     def windows_build(self):
         cflags = ["/nologo", "/EHsc", "/I.", "/D _CRT_SECURE_NO_DEPRECATE"]
