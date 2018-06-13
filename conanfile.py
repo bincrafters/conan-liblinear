@@ -57,8 +57,8 @@ class LibLinearConan(ConanFile):
 
         if self.settings.arch == "x86":
             # liblinear makefile does not use cflags while linking, so do this here
-            cc += " -m32"
-            cxx += " -m32"
+            cc = '"{0} -m32"'.format(cc)
+            cxx += '"{0} -m32"'.format(cxx)
 
         cflags = ["-Wall", "-Wconversion"]
             
