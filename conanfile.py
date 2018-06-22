@@ -96,7 +96,8 @@ class LibLinearConan(ConanFile):
         self.copy(pattern="linear.h", dst="include", src=self.source_subfolder)
         self.copy(pattern="tron.h", dst="include", src=self.source_subfolder)
         self.copy(pattern="liblinear.so*", dst="lib", keep_path=False, symlinks=True, src=self.source_subfolder)
-        self.copy(pattern="liblinear.dll", dst="bin", keep_path=False, src=self.source_subfolder)
+        self.copy(pattern="liblinear.lib", dst="lib", keep_path=False, src=self.source_subfolder + "/windows")
+        self.copy(pattern="liblinear.dll", dst="bin", keep_path=False, src=self.source_subfolder + "/windows")
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
