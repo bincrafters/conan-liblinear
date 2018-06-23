@@ -3,6 +3,7 @@
 
 from conans import ConanFile, tools
 import os
+import glob
 
 
 class LibLinearConan(ConanFile):
@@ -37,8 +38,13 @@ class LibLinearConan(ConanFile):
         tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.github_version))
         extracted_dir = self.name + "-" + self.github_version
 
-        #Rename to "source_subfolder" is a convention to simplify later steps
+        # Rename to "source_subfolder" is a convention to simplify later steps
         os.rename(extracted_dir, self.source_subfolder)
+
+        # Remove pre-built binaries from windows folder
+        files = glob.glob("{0}/windows/*".format(self.source_subfolder))
+        for f in files:
+            os.remove(f)
 
     def system(self, command):
         retcode = os.system(command)
