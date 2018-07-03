@@ -8,7 +8,7 @@ static feature_node x1 [] = {{1, -1}, {2, 1}, {-1, 0}};
 static feature_node x2 [] = {{1, 1}, {2, 1}, {-1, 0}};
 static feature_node x3 [] = {{1, -1}, {2, -1}, {-1, 0}};
 static feature_node x4 [] = {{1, 1}, {2, -1}, {-1, 0}};
-        
+
 static feature_node* x[] = {x1, x2, x3, x4};
 
 static double y[] = {0.0, 0.0, 1.0, 1.0};
@@ -36,7 +36,7 @@ int main()
     p.l = 4;
     p.n = 2;
     p.bias = 0;
-    p.x = x; 
+    p.x = x;
     p.y = y;
 
     // The solver settings
@@ -45,11 +45,11 @@ int main()
     param.eps = 10e-8;
     param.C = 1;
     param.nr_weight = 0;
-    param.weight_label = nullptr;
-    param.weight = nullptr;
+    param.weight_label = NULL;
+    param.weight = NULL;
 
     const char* error = check_parameter(&p, &param);
-    if (error != nullptr) {
+    if (error != NULL) {
         std::cerr << "Error found while checking model parameters" << std::endl;
         return EXIT_FAILURE;
     }
