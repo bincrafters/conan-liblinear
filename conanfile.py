@@ -9,7 +9,7 @@ class LibLinearConan(ConanFile):
     name = "liblinear"
     version = "2.20"
     description = "A Library for Large Linear Classification"
-    url = "https://github.com/konijnendijk/conan-libname"
+    url = "https://github.com/bincrafters/conan-liblinear"
     homepage = "https://www.csie.ntu.edu.tw/~cjlin/liblinear/"
     license = "BSD-3-Clause"
     author = "Bincrafters <bincrafters@gmail.com>"
