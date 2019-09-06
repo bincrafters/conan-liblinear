@@ -18,8 +18,8 @@ class LibLinearConan(ConanFile):
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = "shared=False", "fPIC=True",
-    source_subfolder = "source_subfolder"
+    default_options = {'shared': False, 'fPIC': True}
+    _source_subfolder = "source_subfolder"
 
     def config_options(self):
         if self.settings.os == 'Windows':
@@ -30,20 +30,20 @@ class LibLinearConan(ConanFile):
         github_version = self.version.replace(".", "")
         tools.get("{0}/archive/v{1}.tar.gz".format(source_url, github_version))
         extracted_dir = self.name + "-" + github_version
-        os.rename(extracted_dir, self.source_subfolder)
+        os.rename(extracted_dir, self._source_subfolder)
 
-    def configure_cmake(self):
+    def _configure_cmake(self):
         cmake = CMake(self)
         cmake.configure()
         return cmake
 
     def build(self):
-        cmake = self.configure_cmake()
+        cmake = self._configure_cmake()
         cmake.build()
 
     def package(self):
-        self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
-        cmake = self.configure_cmake()
+        self.copy(pattern="COPYRIGHT", dst="licenses", src=self._source_subfolder)
+        cmake = self._configure_cmake()
         cmake.install()
 
     def package_info(self):

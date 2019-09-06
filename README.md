@@ -2,7 +2,7 @@
 
 | Bintray | Windows | Linux |
 |:--------:|:---------:|:-----------------:|
-|[![Bintray](https://api.bintray.com/packages/bincrafters/public-conan/liblinear:bincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/liblinear:bincrafters/2.20:stable) | [![Appveyor branch](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-liblinear?branch=stable%2F2.20&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-liblinear) | [![Travis branch](https://travis-ci.org/bincrafters/conan-liblinear.svg?branch=stable/2.20)](https://travis-ci.org/bincrafters/conan-liblinear) |
+|[![Bintray](https://api.bintray.com/packages/bincrafters/public-conan/liblinear:bincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/liblinear:bincrafters/2.20:stable) | [![Appveyor branch](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-liblinear?branch=stable%2F2.20&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-liblinear) | [![Travis branch](https://travis-ci.com/bincrafters/conan-liblinear.svg?branch=stable/2.20)](https://travis-ci.com/bincrafters/conan-liblinear) |
 
 ## Conan.io Information
 
