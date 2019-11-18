@@ -9,7 +9,6 @@ class LibLinearConan(ConanFile):
     url = "https://github.com/bincrafters/conan-liblinear"
     homepage = "https://www.csie.ntu.edu.tw/~cjlin/liblinear/"
     license = "BSD-3-Clause"
-    author = "Bincrafters <bincrafters@gmail.com>"
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
